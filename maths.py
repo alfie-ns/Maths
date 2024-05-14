@@ -5,12 +5,46 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import Ridge, LogisticRegression
 from sklearn.preprocessing import PolynomialFeatures
 
+# --------------------------------------------------------------
+
+'''
+This function generates synthetic linear data with noise. The goal is to create a dataset 
+where the true relationship between the input variable X and the output variable y 
+follows a linear model with added Gaussian noise.
+
+The linear relationship is defined as:
+    y = 4 + 3X + noise
+
+Here:
+- `X` is the input variable and is randomly generated within the range [0, 2).
+- `y` is the output variable which is linearly dependent on `X` plus some random noise.
+- The noise is added to simulate real-world data where measurements and observations 
+  are not perfect and contain some randomness.
+
+Mathematically:
+1. `X = 2 * np.random.rand(n_samples, 1)` generates n_samples random values for X.
+   - `np.random.rand(n_samples, 1)` creates a column vector with n_samples random values 
+     uniformly distributed in the range [0, 1).
+   - Multiplying by 2 scales these values to the range [0, 2).
+
+2. `y = 4 + 3 * X + np.random.randn(n_samples, 1)` computes the corresponding y values.
+   - `4` is the intercept term (the value of y when X = 0).
+   - `3` is the slope of the line (how much y increases for a unit increase in X).
+   - `np.random.randn(n_samples, 1)` adds Gaussian noise with mean 0 and standard deviation 1 
+     to each y value. This noise term is what makes the data realistic, simulating the 
+     variability you would expect in real-world data.
+
+The function returns the generated X and y values as NumPy arrays.
+'''
+
 def generate_linear_data(n_samples=100):
     """Generate synthetic linear data with noise."""
     np.random.seed(42)
     X = 2 * np.random.rand(n_samples, 1)
     y = 4 + 3 * X + np.random.randn(n_samples, 1)
     return X, y
+
+# --------------------------------------------------------------
 
 def generate_logistic_data(n_samples=100):
     """Generate synthetic logistic data."""
@@ -19,12 +53,16 @@ def generate_logistic_data(n_samples=100):
     y = (X > 0).astype(int).ravel()
     return X, y
 
+# --------------------------------------------------------------
+
 def compute_loss(X, y, theta):
-    """Compute the mean squared error loss."""
-    m = len(y)
+    # Compute the mean squared error loss.(MSE)
+    m = len(y) # Number of samples: m=
     predictions = X.dot(theta)
     loss = (1 / (2 * m)) * np.sum(np.square(predictions - y))
     return loss
+
+# --------------------------------------------------------------
 
 def gradient_descent(X, y, theta, learning_rate=0.01, n_iterations=1000):
     """Perform gradient descent to learn theta."""
@@ -38,6 +76,8 @@ def gradient_descent(X, y, theta, learning_rate=0.01, n_iterations=1000):
 
     return theta, loss_history
 
+# --------------------------------------------------------------
+
 def polynomial_regression(X, y, degree=2):
     """Train a polynomial regression model."""
     poly_features = PolynomialFeatures(degree=degree, include_bias=False)
@@ -45,17 +85,23 @@ def polynomial_regression(X, y, degree=2):
     theta = np.linalg.pinv(X_poly.T.dot(X_poly)).dot(X_poly.T).dot(y)
     return theta, poly_features
 
+# --------------------------------------------------------------
+
 def ridge_regression(X, y, alpha=1.0):
     """Train a ridge regression model."""
     model = Ridge(alpha=alpha)
     model.fit(X, y)
     return model
 
+# --------------------------------------------------------------
+
 def logistic_regression(X, y):
     """Train a logistic regression model."""
     model = LogisticRegression()
     model.fit(X, y)
     return model
+
+# --------------------------------------------------------------
 
 def add_explanation_below(ax, text):
     """Add explanation text below the plot."""
@@ -65,6 +111,8 @@ def add_explanation_below(ax, text):
     ylim = ax.get_ylim()
     ax.text((xlim[1] - xlim[0]) / 2 + xlim[0], ylim[0] - 0.1 * (ylim[1] - ylim[0]), text,
             ha='center', va='top', fontsize=10, wrap=True, bbox=dict(facecolor='white', alpha=0.5))
+    
+# --------------------------------------------------------------
 
 def train_models():
     """Train various regression models and demonstrate their performance."""
