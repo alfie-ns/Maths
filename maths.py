@@ -8,33 +8,33 @@ from sklearn.preprocessing import PolynomialFeatures
 # --------------------------------------------------------------
 
 '''
-This function generates synthetic linear data with noise. The goal is to create a dataset 
-where the true relationship between the input variable X and the output variable y 
-follows a linear model with added Gaussian noise.
+    This function generates synthetic linear data with noise. The goal is to create a dataset 
+    where the true relationship between the input variable X and the output variable y 
+    follows a linear model with added Gaussian noise.
 
-The linear relationship is defined as:
-    y = 4 + 3X + noise
+    The linear relationship is defined as:
+        y = 4 + 3X + noise
 
-Here:
-- `X` is the input variable and is randomly generated within the range [0, 2).
-- `y` is the output variable which is linearly dependent on `X` plus some random noise.
-- The noise is added to simulate real-world data where measurements and observations 
-  are not perfect and contain some randomness.
+    Here:
+    - `X` is the input variable and is randomly generated within the range [0, 2).
+    - `y` is the output variable which is linearly dependent on `X` plus some random noise.
+    - The noise is added to simulate real-world data where measurements and observations 
+      are not perfect and contain some randomness.
 
-Mathematically:
-1. `X = 2 * np.random.rand(n_samples, 1)` generates n_samples random values for X.
-   - `np.random.rand(n_samples, 1)` creates a column vector with n_samples random values 
-     uniformly distributed in the range [0, 1).
-   - Multiplying by 2 scales these values to the range [0, 2).
+    Mathematically:
+    1. `X = 2 * np.random.rand(n_samples, 1)` generates n_samples random values for X.
+       - `np.random.rand(n_samples, 1)` creates a column vector with n_samples random values 
+         uniformly distributed in the range [0, 1).
+       - Multiplying by 2 scales these values to the range [0, 2).
 
-2. `y = 4 + 3 * X + np.random.randn(n_samples, 1)` computes the corresponding y values.
-   - `4` is the intercept term (the value of y when X = 0).
-   - `3` is the slope of the line (how much y increases for a unit increase in X).
-   - `np.random.randn(n_samples, 1)` adds Gaussian noise with mean 0 and standard deviation 1 
-     to each y value. This noise term is what makes the data realistic, simulating the 
-     variability you would expect in real-world data.
+    2. `y = 4 + 3 * X + np.random.randn(n_samples, 1)` computes the corresponding y values.
+       - `4` is the intercept term (the value of y when X = 0).
+       - `3` is the slope of the line (how much y increases for a unit increase in X).
+       - `np.random.randn(n_samples, 1)` adds Gaussian noise with mean 0 and standard deviation 1 
+         to each y value. This noise term is what makes the data realistic, simulating the 
+         variability you would expect in real-world data.
 
-The function returns the generated X and y values as NumPy arrays.
+    The function returns the generated X and y values as NumPy arrays.
 '''
 
 def generate_linear_data(n_samples=100):
@@ -47,8 +47,15 @@ def generate_linear_data(n_samples=100):
 # --------------------------------------------------------------
 
 def generate_logistic_data(n_samples=100):
-    """Generate synthetic logistic data."""
-    np.random.seed(42)
+    """
+        This function generates logisitic data
+    
+    
+    
+    
+    
+    """
+    np.random.seed(42) # pass in a random seed(42)
     X = 3 * np.random.rand(n_samples, 1) - 1.5
     y = (X > 0).astype(int).ravel()
     return X, y
